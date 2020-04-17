@@ -1,0 +1,36 @@
+.philosophy-color{
+    background-color: blueviolet !important;
+    color: white !important;
+}
+.sociology-color{
+    background-color: rgb(212, 226, 6) !important;
+    color: black !important;
+}
+.ethics-color{
+    background-color: green !important;
+    color: white !important;
+}
+.psychology-color{
+    background-color: orangered !important;
+    color: white !important;
+}
+.law-color{
+    background-color: saddlebrown !important;
+    color: white !important;
+}
+.spirituality-color{
+    background-color: gold !important;
+    color: black !important;
+}
+.chip{
+    margin-left:0.3rem;
+}
+
+.MuiCardHeader-subheader{
+    float: right;
+}
+
+.MuiCardHeader-title{
+    display: inline !important;
+    vertical-align: middle !important;
+}
