@@ -24,7 +24,7 @@ const IndexPage = () => {
         {
           questions ?
             questions.map( item => (               
-              <QuestionCard title={item.title.rendered} question={item.ACF.question} categories={item.categories} update={item.date} key={item.id} />                  
+              <QuestionCard title={item.title.rendered} question={item.content.rendered} categories={item.categories} update={item.date} key={item.id} />                  
                  )
              ) : 'Loading'
           }

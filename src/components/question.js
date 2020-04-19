@@ -21,10 +21,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     margin: '1rem auto',
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
@@ -34,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
   expandOpen: {
     transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
   },
 }));
 
@@ -70,13 +63,13 @@ export default function QuestionCard(props) {
                 <Categories categories={props.categories} />
              </React.Fragment> 
         } 
-        title={`${props.title}`}  // Question Title
+        
         subheader={`question posted ${props.update}`} // Date Modified
       />
       <CardContent>
         {/* Question */}
-        <Typography variant="body2" color="textSecondary" component="p">
-          {`${props.question}`}  
+        <Typography variant="body2" color="textSecondary" component="p" dangerouslySetInnerHTML={ {__html: `<h2>${props.title}</h2>  ${props.question}`} }>
+       
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

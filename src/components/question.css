@@ -34,3 +34,7 @@
     display: inline !important;
     vertical-align: middle !important;
 }
+
+.MuiCardContent-root {
+    padding: 0px 1rem !important;
+}
