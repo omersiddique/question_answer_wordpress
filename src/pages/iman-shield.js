@@ -3,6 +3,7 @@ import Layout from "../components/layout"
 import Typo from "@material-ui/core/Typography"
 import QuestionCard from "../components/question"
 
+
 const IndexPage = () => {
     const [questions, setQuestions] = useState(false);
 

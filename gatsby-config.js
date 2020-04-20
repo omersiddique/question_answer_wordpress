@@ -7,7 +7,7 @@
 module.exports = {
   siteMetadata: {
     title: `Hikmah Sessions`,
-    description: `The only true wisdom is in knowing you know nothing. ― Socrates`,
+    description: `Islamic inspired wisdom`,
     author: `Omer Siddique`,
   },
   plugins: [
@@ -22,6 +22,8 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-transformer-remark`,
     `gatsby-plugin-emotion`,
-    `gatsby-plugin-react-helmet`,    
+    `gatsby-plugin-react-helmet`,
+    `react-redux`,
+    `redux`    
   ],
 }

@@ -8,13 +8,14 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Chip from "@material-ui/core/Chip"
+import TimeAgo from 'react-timeago'
 import "./question.css"
 import categoryReducer from "./category_reducer"
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,7 +65,7 @@ export default function QuestionCard(props) {
              </React.Fragment> 
         } 
         
-        subheader={`question posted ${props.update}`} // Date Modified
+        subheader={ <TimeAgo date={props.update} live={false} /> } // Date Modified
       />
       <CardContent>
         {/* Question */}
