@@ -19,7 +19,7 @@ import {createStore as reduxCreateStore} from 'redux';
  // Accepts the current state and an action detailing what to do with it
 const reducer = (state, action) => {
     if (action.type === `INCREMENT`){
-        return Object.assign( {}, state, {count: state.count + 1}); // Declare an empty object, copy the state into it, then copy and replace the count variable in the state object
+        return Object.assign( {}, state, {count: state.count + action.payload}); // Declare an empty object, copy the state into it, then copy and replace the count variable in the state object
     
     }
     // default case
