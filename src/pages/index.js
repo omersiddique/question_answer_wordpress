@@ -3,7 +3,7 @@ import Layout from "../components/layout"
 
 export default () => (
   <Layout>
-    <p>Ar RahmanirRaheem</p>
+    <p>Bismillah Ar RahmanirRaheem</p>
     <img src = {`../../images/quran.jpg`} alt="" />
   </Layout>
 )

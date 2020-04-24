@@ -35,6 +35,7 @@
     "react-timeago": "^4.4.0",
     "react-typography": "^0.16.19",
     "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "typography": "^0.16.19",
     "typography-theme-fairy-gates": "^0.16.19",
     "typography-theme-kirkham": "^0.16.19"

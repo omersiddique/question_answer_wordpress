@@ -1,4 +1,5 @@
-import {createStore as reduxCreateStore} from 'redux';
+import {createStore as reduxCreateStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 
 /**
  * This is a reducer, a pure function with (state, action) => state signature.
@@ -26,7 +27,11 @@ const reducer = (state, action) => {
     return state;
 }
 
-const initialState = {count:0}
+const initialState = {
+    niceName: '',
+    isLoggedIn: false
+}
 
-const createStore = () => reduxCreateStore(reducer, initialState);
+// hooking up thunk to store
+const createStore = () => reduxCreateStore(reducer, initialState, applyMiddleware(thunk));
 export default createStore;
