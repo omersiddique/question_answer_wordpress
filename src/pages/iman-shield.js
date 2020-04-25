@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react"
 import Layout from "../components/layout"
 import Typo from "@material-ui/core/Typography"
 import QuestionCard from "../components/question"
+import Backdrop from "../components/backdrop"
 
 
 const IndexPage = () => {
@@ -25,7 +26,7 @@ const IndexPage = () => {
             questions.map( item => (               
               <QuestionCard title={item.title.rendered} question={item.content.rendered} categories={item.categories} update={item.date} key={item.id} />                  
                  )
-             ) : 'Loading'
+             ) : <Backdrop />
           }
        
     </Layout>

@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SnackBar from './snackbar';
+import Backdrop from './backdrop';
 import {connect} from "react-redux"
 import "./login-form.css"
 
@@ -27,6 +28,7 @@ const FormDialog = () => {
   };
 
   const login = async() => {
+    changeLoading(true);
     setMessage(false);
     const login_url = `https://hikmahsessions.com/control-panelz/wp-json/jwt-auth/v1/token`;
     const login_data = {
@@ -40,7 +42,8 @@ const FormDialog = () => {
     }
     const response = await fetch(login_url, requestOptions);
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
+    changeLoading(false);
     if (response.status === 200) {
       setError(false);
       
@@ -68,6 +71,7 @@ const FormDialog = () => {
         Login
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+       {loading ? <Backdrop /> : ''}
         <DialogTitle id="form-dialog-title">Login</DialogTitle>
         <DialogContent>
           <DialogContentText>
