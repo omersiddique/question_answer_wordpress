@@ -6,13 +6,17 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import SnackBar from './snackbar';
 import {connect} from "react-redux"
+import "./login-form.css"
 
 const FormDialog = () => {
   const [open, setOpen] = React.useState(false);
   const [username, setUsername] = React.useState('mr.omersiddique@gmail.com');
   const [password, setPassword] = React.useState('');
   const [loading, changeLoading] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [returnMessage, setMessage] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -23,6 +27,7 @@ const FormDialog = () => {
   };
 
   const login = async() => {
+    setMessage(false);
     const login_url = `https://hikmahsessions.com/control-panelz/wp-json/jwt-auth/v1/token`;
     const login_data = {
       username,
@@ -36,6 +41,15 @@ const FormDialog = () => {
     const response = await fetch(login_url, requestOptions);
     const data = await response.json();
     console.log(data);
+    if (response.status === 200) {
+      setError(false);
+      
+      setMessage('Success! Logging you in.');
+    }
+    else{
+      setError(true);
+      setMessage('Error logging in. Are you sure your details are correct?');
+    }
   }
 
   const updateUsername = (event) => {
@@ -47,7 +61,9 @@ const FormDialog = () => {
   }
 
   return (
-    <div>
+    <div>      
+      {(returnMessage) && error ? <SnackBar message={returnMessage} severity={'error'} /> : '' }
+      {(returnMessage) && !error ? <SnackBar message={returnMessage} severity={'success'} /> : '' }
       <Button variant="filled" color="primary" style={{color:"white"}} onClick={handleClickOpen}>
         Login
       </Button>

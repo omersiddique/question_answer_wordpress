@@ -12,8 +12,6 @@ const IndexPage = () => {
       fetch(`https://hikmahsessions.com/control-panelz/wp-json/wp/v2/question`)
       .then(async response => {
         let data = await response.json();
-        console.log(data);
-
         setQuestions(data);
       })
     }, [])

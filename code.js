@@ -72,3 +72,80 @@ const mapDispatchToProps = dispatch => {
 
 // here we use the connect function to name two functions one for handling the received state and one provide the dispatch function
 export default  connect(mapStateToProps, mapDispatchToProps)(AppBarFilled)
+
+
+<Alert severity="error">This is an error message!</Alert>
+<Alert severity="warning">This is a warning message!</Alert>
+<Alert severity="info">This is an information message!</Alert>
+<Alert severity="success">This is a success message!</Alert>
+
+
+
+  
+useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
+    },
+  }));
+
+  autoHideDuration={5000}
+
+
+
+  import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+const styles = {
+  rootSnack :{
+    zIndex: `2000 !important`,
+    fontSize: `50px`,
+  }
+}
+
+export default withStyles(styles)(class SnackBar extends React.Component {
+   
+    constructor(props){
+      super(props);
+      this.state = {
+        open: true,
+      };
+    }
+
+    render(props){     
+      const Alert = (props) => {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+      }     
+      
+  
+      const handleClick = () => {
+       this.setState({open: true});
+      };
+    
+      const handleClose = (event, reason) => {
+       // console.log('Clicked');
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        this.setState({open: false});
+      };
+
+      return (
+          <div className={`message-snackbar`}>
+            <Snackbar className={this.props.classes.root} open={this.state.open} autoHideDuration={3000}  onClose={handleClose}>
+              <Alert onClose={handleClose} severity="error">
+                {this.props.message}
+              </Alert>
+            </Snackbar>
+          </div>
+        );
+    }
+})
+
+
+
