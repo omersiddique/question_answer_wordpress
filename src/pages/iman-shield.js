@@ -20,7 +20,7 @@ const IndexPage = () => {
     return (
     <Layout>
         <Typo variant="h3">Iman Shield</Typo>
-        <Typo style={{fontStyle:'italic'}}>Post a question and have it answered by the community.</Typo>      
+        <Typo style={{fontStyle:'italic'}}>Post a question and have it answered by the community. Login to post a question!</Typo>      
         {
           questions ?
             questions.map( item => (               
