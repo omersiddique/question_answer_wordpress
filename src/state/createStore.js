@@ -24,6 +24,9 @@ const reducer = (state, action) => {
         let newState = {...state, user:{...action.payload}, isLoggedIn: true};
         return newState;
     }
+    if (action.type === `QUESTIONUPDATE`){
+        return {...state, questions:{...action.payload}};
+    }
     // default case
     return state;
 }
@@ -35,7 +38,8 @@ const initialState = {
         user_nicename: '',
         user_display_name: '',
     },
-    isLoggedIn: false
+    isLoggedIn: false,
+    questions: false,
 }
 
 // hooking up thunk to store
