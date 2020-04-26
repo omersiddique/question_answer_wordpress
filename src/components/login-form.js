@@ -11,9 +11,9 @@ import Backdrop from './backdrop';
 import {connect} from "react-redux"
 import "./login-form.css"
 
-const FormDialog = () => {
+const FormDialog = ({isLoggedIn, user, updateUser}) => {
   const [open, setOpen] = React.useState(false);
-  const [username, setUsername] = React.useState('mr.omersiddique@gmail.com');
+  const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [loading, changeLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -45,9 +45,11 @@ const FormDialog = () => {
     //console.log(data);
     changeLoading(false);
     if (response.status === 200) {
-      setError(false);
-      
-      setMessage('Success! Logging you in.');
+      setError(false);      
+      setMessage(`Success! Logged in as ${data.user_display_name}`);
+      handleClose();
+      // Send to Redux
+      updateUser(data);
     }
     else{
       setError(true);
@@ -65,15 +67,15 @@ const FormDialog = () => {
 
   return (
     <div>      
-      {(returnMessage) && error ? <SnackBar message={returnMessage} severity={'error'} /> : '' }
       {(returnMessage) && !error ? <SnackBar message={returnMessage} severity={'success'} /> : '' }
       <Button variant="filled" color="primary" style={{color:"white"}} onClick={handleClickOpen}>
-        Login
+        {isLoggedIn ? `${user.user_display_name} - Logout` : `Login`}
       </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      {!isLoggedIn ? <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
        {loading ? <Backdrop /> : ''}
         <DialogTitle id="form-dialog-title">Login</DialogTitle>
         <DialogContent>
+         {(returnMessage) && error ? <SnackBar message={returnMessage} severity={'error'} /> : '' }
           <DialogContentText>
             Enter your email and password to login
           </DialogContentText>
@@ -101,24 +103,24 @@ const FormDialog = () => {
             Cancel
           </Button>
           <Button onClick={login} color="primary">
-            Login
+            Login 
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> : ``}
     </div>
   );
 }
 
 
-  // destructure count object from state as it may have other objects in the future
-  const mapStateToProps = ( { count } ) => {
-    return { count }
+  //destructure count object from state as it may have other objects in the future
+  const mapStateToProps = ( { isLoggedIn, user } ) => {
+    return { isLoggedIn, user }
   }
   
   // dispatch function is provided to the component automatically, here we pass it to the mapDispatchToProps function first and return the increment 
   // action creator to dispatch a change to the state
   const mapDispatchToProps = dispatch => {
-    return { increment: () => dispatch({ type: `INCREMENT`, payload: 5 }) }
+    return { updateUser: (newUser) => dispatch({ type: `USERUPDATE`, payload: newUser }) }
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormDialog)
