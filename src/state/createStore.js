@@ -20,10 +20,8 @@ import thunk from 'redux-thunk';
  // Accepts the current state and an action detailing what to do with it
 const reducer = (state, action) => {
     if (action.type === `USERUPDATE`){
-        console.log('PAYLOAD ', action.payload);
         // return Object.assign( {}, state, action.payload ); // Declare an empty object, copy the state into it, then copy and replace the count variable in the state object
         let newState = {...state, user:{...action.payload}, isLoggedIn: true};
-        console.log(newState);
         return newState;
     }
     // default case

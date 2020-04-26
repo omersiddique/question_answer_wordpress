@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import TextArea from '@material-ui/core/TextareaAutosize'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -19,11 +20,10 @@ const FormDialog = ({ isLoggedIn, user, ownProps }) => {
   const [error, setError] = React.useState(false);
   const [returnMessage, setMessage] = React.useState(false);
 
-  
-  console.log(isLoggedIn);
 
-  const login = async() => {
-    changeLoading(true);
+  const postQuestion = async(event) => {
+    event.preventDefault();
+    changeLoading(true);    
     setMessage(false);
     const login_url = `https://hikmahsessions.com/control-panelz/wp-json/jwt-auth/v1/token`;
     const login_data = {
@@ -47,6 +47,7 @@ const FormDialog = ({ isLoggedIn, user, ownProps }) => {
       setError(true);
       setMessage('Error logging in. Are you sure your details are correct?');
     }
+    
   }
 
   const updateUsername = (event) => {
@@ -61,7 +62,8 @@ const FormDialog = ({ isLoggedIn, user, ownProps }) => {
     <div>      
       {(returnMessage) && !error ? <SnackBar message={returnMessage} severity={'success'} /> : '' }
       {isLoggedIn ? <Dialog open={ownProps.show} onClose={ownProps.hide} aria-labelledby="form-dialog-title">
-       {loading ? <Backdrop /> : ''}
+       {loading ? <Backdrop /> : ''}       
+       <form onSubmit={postQuestion}>
         <DialogTitle id="form-dialog-title">Post Question</DialogTitle>
         <DialogContent>
          {(returnMessage) && error ? <SnackBar message={returnMessage} severity={'error'} /> : '' }
@@ -70,31 +72,34 @@ const FormDialog = ({ isLoggedIn, user, ownProps }) => {
           </DialogContentText>
           <TextField
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            id="title"
+            label="Question Title"
+            type="text"
             fullWidth
             value={username}
             onChange={updateUsername}
+            required
           />
-          <TextField            
+          <TextArea            
             margin="dense"
-            id="password"
-            label="Password"
-            type="password"
-            fullWidth
+            id="question"
+            label="Question"
+            rowsMin={7}            
             value={password}
             onChange={updatePassword}
+            required
+            placeholder="Your question here..."
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={ownProps.hide} color="primary">
             Cancel
           </Button>
-          <Button onClick={login} color="primary">
-            Login 
+          <Button type="submit"  color="primary">
+            Post 
           </Button>
         </DialogActions>
+        </form>
       </Dialog> : ``}
     </div>
   );
