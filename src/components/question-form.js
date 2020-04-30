@@ -12,7 +12,7 @@ import SnackBar from './snackbar';
 import Backdrop from './backdrop';
 import "./login-form.css"
 
-const FormDialog = ({ isLoggedIn, user, ownProps }) => {
+const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) => {
  // const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
@@ -25,7 +25,7 @@ const FormDialog = ({ isLoggedIn, user, ownProps }) => {
     event.preventDefault();
     changeLoading(true);    
     setMessage(false);
-    const login_url = `https://hikmahsessions.com/control-panelz/wp-json/wp/v2/question`;
+    const login_url = `https://hikmahsessions.com/control-panelz/wp-json/wp/v2/question?per_page=30`;
     const login_data = {
       title,
       content,
@@ -39,19 +39,21 @@ const FormDialog = ({ isLoggedIn, user, ownProps }) => {
       body: JSON.stringify(login_data),
     }
     const response = await fetch(login_url, requestOptions);
-    const data = await response.json();
-    //console.log('REDUX:', user.token);
-    console.log(data);
+    const data = await response.json();   
     changeLoading(false);
+    //console.log(typeof questions);
+    //console.log('REDUX:', questions);
     if (response.status === 201) {
-      setError(false);      
+      setError(false);   
       setMessage(`Successfully added question!`);
+      //console.log(data);
+      updateQuestion(data);
+      ownProps.hide();
     }
     else{
       setError(true);
       setMessage(`${data.message}`);
-    }
-    
+    }    
   }
 
   const updateTitle = (event) => {
@@ -111,14 +113,14 @@ const FormDialog = ({ isLoggedIn, user, ownProps }) => {
 
 
   //destructure count object from state as it may have other objects in the future
-  const mapStateToProps = ( { isLoggedIn, user }, ownProps) => {
-    return { isLoggedIn, user , ownProps: ownProps }
+  const mapStateToProps = ( { isLoggedIn, user, questions }, ownProps) => {
+    return { isLoggedIn, user , questions, ownProps: ownProps }
   }
   
-  // dispatch function is provided to the component automatically, here we pass it to the mapDispatchToProps function first and return the increment 
-  // action creator to dispatch a change to the state
-//   const mapDispatchToProps = dispatch => {
-//     return { updateUser: (newUser) => dispatch({ type: `USERUPDATE`, payload: newUser }) }
-//   }
+ // dispatch function is provided to the component automatically, here we pass it to the mapDispatchToProps function first and return the increment 
+ // action creator to dispatch a change to the state
+  const mapDispatchToProps = dispatch => {
+    return { updateQuestion: (newQuestion) => dispatch({ type: `ADDQUESTION`, payload: newQuestion }) }
+  }
 
-export default connect(mapStateToProps)(FormDialog)
+export default connect(mapStateToProps, mapDispatchToProps)(FormDialog)
