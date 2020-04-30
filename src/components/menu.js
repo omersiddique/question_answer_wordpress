@@ -11,8 +11,7 @@ const ListLink = props => (
 
 export default ( { children } ) => (
     <ul id="main-menu" className={styles.mainMenu}>
-    <ListLink to="/"> <Typography>HOME</Typography></ListLink>
-    <ListLink to="/iman-shield/"><Typography>IMAN SHIELD</Typography></ListLink>
+    <ListLink to="/"><Typography>IMAN SHIELD</Typography></ListLink>
     <ListLink to="/contact"><Typography>CONTACT</Typography></ListLink>
     </ul>
    

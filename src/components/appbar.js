@@ -16,7 +16,7 @@ const AppBarFilled = () => (
             <IconButton edge="start"  color="primary" aria-label="menu">
             </IconButton>
             <Typography component="h6" >
-                Hikmah Sessions
+                
             </Typography>
             <Menu />
             <LoginForm  />

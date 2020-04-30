@@ -14,8 +14,8 @@ import "./login-form.css"
 
 const FormDialog = ({ isLoggedIn, user, ownProps }) => {
  // const [open, setOpen] = React.useState(false);
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [title, setTitle] = React.useState('');
+  const [content, setContent] = React.useState('');
   const [loading, changeLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [returnMessage, setMessage] = React.useState(false);
@@ -25,37 +25,41 @@ const FormDialog = ({ isLoggedIn, user, ownProps }) => {
     event.preventDefault();
     changeLoading(true);    
     setMessage(false);
-    const login_url = `https://hikmahsessions.com/control-panelz/wp-json/jwt-auth/v1/token`;
+    const login_url = `https://hikmahsessions.com/control-panelz/wp-json/wp/v2/question`;
     const login_data = {
-      username,
-      password
+      title,
+      content,
+      "status" : "publish"
     }
     const requestOptions = {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json', 
+        'Authorization': `Bearer ${user.token}`
+      },
       body: JSON.stringify(login_data),
     }
     const response = await fetch(login_url, requestOptions);
     const data = await response.json();
-    //console.log(data);
+    //console.log('REDUX:', user.token);
+    console.log(data);
     changeLoading(false);
-    if (response.status === 200) {
+    if (response.status === 201) {
       setError(false);      
-      setMessage(`Success! Logged in as ${data.user_display_name}`);
+      setMessage(`Successfully added question!`);
     }
     else{
       setError(true);
-      setMessage('Error logging in. Are you sure your details are correct?');
+      setMessage(`${data.message}`);
     }
     
   }
 
-  const updateUsername = (event) => {
-    setUsername(event.target.value);
+  const updateTitle = (event) => {
+    setTitle(event.target.value);
   }
 
-  const updatePassword = (event) => {
-    setPassword(event.target.value);
+  const updateContent = (event) => {
+    setContent(event.target.value);
   }
 
   return (
@@ -76,8 +80,8 @@ const FormDialog = ({ isLoggedIn, user, ownProps }) => {
             label="Question Title"
             type="text"
             fullWidth
-            value={username}
-            onChange={updateUsername}
+            value={title}
+            onChange={updateTitle}
             required
           />
           <TextArea            
@@ -85,10 +89,10 @@ const FormDialog = ({ isLoggedIn, user, ownProps }) => {
             id="question"
             label="Question"
             rowsMin={7}            
-            value={password}
-            onChange={updatePassword}
+            value={content}
+            onChange={updateContent}
             required
-            placeholder="Your question here..."
+            placeholder="Your question here*."
           />
         </DialogContent>
         <DialogActions>
