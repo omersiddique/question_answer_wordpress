@@ -39,12 +39,14 @@ const useStyles = makeStyles((theme) => ({
 export default function QuestionCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-
+  var isAnswers = true;
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  
+  if (typeof props.answers === 'undefined'){
+    isAnswers = false;
+  }
 
   function Categories(categories) {
     return props.categories.map( (id) => {
@@ -98,11 +100,9 @@ export default function QuestionCard(props) {
         <CardContent>
           <List>
             {
-              (props.answers) ? 
-                answers.map( answer => (
-                  <Answer key={answer.ID} title={answer.name} content={answer.post_content} /> 
-                )) 
-              : ''
+              (isAnswers) ? props.answers.map( answer => (
+                <Answer key={answer.ID} title={answer.post_title} content={answer.post_content} /> 
+              )) : '' 
             }
           </List>
         </CardContent>
