@@ -26,6 +26,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
       fetch(`https://hikmahsessions.com/control-panelz/wp-json/wp/v2/question?per_page=30`)
       .then(async response => {
         let data = await response.json();
+        console.log(data);
         updateQuestions([data]);
       })
     }, [])
@@ -48,13 +49,16 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
           </Grid>      
         {          
           (questions) ?
-          questions[0].map( item => (               
-              <QuestionCard title={item.title.rendered} question={item.content.rendered} categories={item.categories} update={item.date} key={item.id} />                  
+          questions[0].map( item => ( 
+              <>         
+                <QuestionCard title={item.title.rendered} question={item.content.rendered} categories={item.categories} update={item.date} key={item.id} answers={item.ACF.answers} /> 
+              </>        
                 )
             ) 
+           
            : <Backdrop />
+        
           }
-       
     </Layout>
     )
 }

@@ -6,8 +6,8 @@
 
 module.exports = {
   siteMetadata: {
-    title: `Hikmah Sessions`,
-    description: `Islamic inspired wisdom`,
+    title: `Iman Shield`,
+    description: `Safeguarding Iman`,
     author: `Omer Siddique`,
   },
   plugins: [

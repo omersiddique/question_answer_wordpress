@@ -19,27 +19,23 @@ import thunk from 'redux-thunk';
  
  // Accepts the current state and an action detailing what to do with it
 const reducer = (state, action) => {
+
     if (action.type === `USERUPDATE`){
-        // return Object.assign( {}, state, action.payload ); // Declare an empty object, copy the state into it, then copy and replace the count variable in the state object
         let newState = {...state, user:{...action.payload}, isLoggedIn: true};
         return newState;
     }
+
     if (action.type === `QUESTIONUPDATE`){
         return {...state, questions:{...action.payload}};
     }
+
     if (action.type === `ADDQUESTION`){
-        //let count = Object.keys(state.questions).length;
-        //console.log('COUNT', count);
-        //let newQuestions = Object.assign({}, {count: action.payload}, state.questions);
         let newQuestions = { ...state.questions };
         newQuestions[0].unshift(action.payload);
-        //newQuestions[Object.keys(newQuestions).length + 1] = action.payload;
-        //newQuestions = toArray(newQuestions);
-        //console.log('TUPE', typeof newQuestions);
 
         let newState = {...state, questions: newQuestions };
-        console.log(newState.questions);
-        console.log(state.questions);
+        // console.log(newState.questions);
+        // console.log(state.questions);
         return newState;
 
     }
@@ -47,13 +43,6 @@ const reducer = (state, action) => {
     return state;
 }
 
-// const toArray = (objectToChange) =>{
-//     let finalArray = [];
-//     for (let item in objectToChange){
-//         finalArray.push(objectToChange[item]);
-//     }
-//     return finalArray;
-// }
 
 const initialState = {
     user: {
