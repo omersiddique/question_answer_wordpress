@@ -27,15 +27,14 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
 
   const postQuestion = async(event) => {
     event.preventDefault();
-    changeLoading(true);    
+    changeLoading(true);
+
     setMessage(false);
     const login_url = `https://hikmahsessions.com/control-panelz/wp-json/iman-shield/v1/answers`;
     const login_data = {
-      title,
-      content,
-      question_ID : ownProps.questionID,
-      "status" : "publish",
-
+      post_title: title,
+      post_content: content,
+      question_ID : String(ownProps.questionID)
     }
     const requestOptions = {
       method: 'POST',
@@ -44,6 +43,7 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
       },
       body: JSON.stringify(login_data),
     }
+    console.log(JSON.stringify(requestOptions, null, 2)  );
     const response = await fetch(login_url, requestOptions);
     const data = await response.json();   
     changeLoading(false);
@@ -74,8 +74,8 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
     <div className=''>      
       {(returnMessage) && !error ? <SnackBar message={returnMessage} severity={'success'} /> : '' }
       {loading ? <Backdrop /> : ''}  
-      {isLoggedIn ?           
-       <form onSubmit={postQuestion}>           
+      {isLoggedIn ?            
+       <form onSubmit={postQuestion}>         
         <Box paddingTop={3} />
       <Typo variant="body2" color="black" className="small-instruction" component="p">Enter a short title and type in your answer below: {ownProps.questionID}</Typo>
         <Box marginTop={3} />

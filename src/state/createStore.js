@@ -45,12 +45,7 @@ const reducer = (state, action) => {
 
 
 const initialState = {
-    user: {
-        token: '',
-        user_email: '',
-        user_nicename: '',
-        user_display_name: '',
-    },
+    user: {},
     isLoggedIn: false,
     questions: false,
 }
