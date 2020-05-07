@@ -17,6 +17,8 @@ import TimeAgo from 'react-timeago'
 import "./question.css"
 import categoryReducer from "./category_reducer"
 import Answer from "./answer/answer"
+import NewAnswerForm from "./answer/new-answer-form"
+import AnswerTabs from "./answer/answer-tabs.js"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,6 +62,17 @@ export default function QuestionCard(props) {
     })
   } 
 
+  const allAnswers = (
+    <CardContent>          
+      <List>
+        {
+          (isAnswers) ? props.answers.map( answer => (
+            (answer.post_status === 'publish') ? <Answer key={answer.ID} title={answer.post_title} content={answer.post_content} /> : '' 
+          )) : '' 
+        }
+      </List>
+    </CardContent>);
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -97,15 +110,7 @@ export default function QuestionCard(props) {
       </CardActions>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <List>
-            {
-              (isAnswers) ? props.answers.map( answer => (
-                <Answer key={answer.ID} title={answer.post_title} content={answer.post_content} /> 
-              )) : '' 
-            }
-          </List>
-        </CardContent>
+        <AnswerTabs answerForm={<NewAnswerForm questionID={props.questionID} />} answers={allAnswers} />       
       </Collapse>
       
     </Card>
