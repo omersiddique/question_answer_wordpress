@@ -8,10 +8,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Box from '@material-ui/core/Box'
 import SnackBar from './snackbar';
 import Backdrop from './backdrop';
 import "./login-form.css"
-import getQuestions from "./getQuestions.js"
+import getQuestions from "./getQuestions"
+import CategorySelect from './category-select'
 
 const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) => {
  // const [open, setOpen] = React.useState(false);
@@ -20,13 +24,14 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
   const [loading, changeLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [returnMessage, setMessage] = React.useState(false);
+  const [categoryIDs, setIDs] = React.useState([]);
 
-  
   const postQuestion = async(event) => {
     event.preventDefault();
     changeLoading(true);    
     setMessage(false);
-    const response = getQuestions(title, content, user.token);      
+    const response = await getQuestions(title, content, categoryIDs, user.token, true);    
+    console.log(response);  
     const data = await response.json(); 
     changeLoading(false);
     if (response.status === 201) {
@@ -61,26 +66,37 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
           <DialogContentText>
             Ask a new question here. Once approved it will be posted live so the online community can help answer it.
           </DialogContentText>
-          <TextField
-            margin="dense"
-            id="title"
-            label="Question Title"
-            type="text"
-            fullWidth
-            value={title}
-            onChange={updateTitle}
-            required
-          />
-          <TextArea            
-            margin="dense"
-            id="question"
-            label="Question"
-            rowsMin={7}            
-            value={content}
-            onChange={updateContent}
-            required
-            placeholder="Your question here*."
-          />
+       
+          <Box marginTop={3} />
+      <FormControl  fullWidth variant="outlined">                       
+         
+         <InputLabel htmlFor="outlined-adornment-answerTitle">Question Title</InputLabel> 
+         <OutlinedInput
+              id="title"
+              value={title}
+              onChange={updateTitle}
+              labelWidth={100}
+              required
+              startAdornment={<InputAdornment position="start"></InputAdornment>}
+         />         
+      </FormControl> 
+        <Box marginTop={3} />
+        <FormControl  fullWidth variant="outlined">                       
+         
+           <InputLabel htmlFor="outlined-adornment-answer">Question</InputLabel> 
+           <OutlinedInput
+                id="outlined-adornment-answer"
+                inputComponent="textarea"
+                rowsMin={7}
+                value={content}
+                onChange={updateContent}
+                labelWidth={70}
+                required
+                startAdornment={<InputAdornment position="start"></InputAdornment>}
+           />         
+        </FormControl> 
+
+        <CategorySelect categories={setIDs} />
         </DialogContent>
         <DialogActions>
           <Button onClick={ownProps.hide} color="primary">
