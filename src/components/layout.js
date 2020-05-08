@@ -5,7 +5,6 @@ import Container from '@material-ui/core/Container';
 import {connect} from 'react-redux'
 import AppBar from "./appbar"
 import Header from "./header"
-import FloatingActionButton from "./floating-action-button"
 import QuestionMenu from "./question-menu"
 
 const mapStateToProps = ({isLoggedIn}) =>{
