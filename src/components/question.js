@@ -46,7 +46,8 @@ export default function QuestionCard(props) {
     setExpanded(!expanded);
   };
 
-  if (typeof props.answers === 'undefined'){
+  // TODO: props.answers == undefined when a question is added from backend but and empty string wnen updated from backend
+  if (typeof props.answers === 'undefined' || props.answers == ''){
     isAnswers = false;
   }
 

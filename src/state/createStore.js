@@ -26,6 +26,8 @@ const reducer = (state, action) => {
     }
 
     if (action.type === `QUESTIONUPDATE`){
+        // console.log(state);
+        // console.log(action.payload);
         return {...state, questions:{...action.payload}};
     }
 
@@ -35,15 +37,15 @@ const reducer = (state, action) => {
         newQuestions[0].unshift(action.payload);
 
         let newState = {...state, questions: newQuestions };
-         console.log(newState.questions);
-         console.log(state.questions);
+        //  console.log(newState.questions);
+        //  console.log(state.questions);
         return newState;
 
     }
 
     if (action.type === `ADDANSWER`){
-       console.log('This is it');
-       console.log(state);
+    //    console.log('This is it');
+    //    console.log(state);
        return state;
     }
 

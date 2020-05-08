@@ -28,7 +28,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
         let data = await response.json();
         updateQuestions([data]);
       })
-    })
+    }, [])
 
     return (
     <Layout>
