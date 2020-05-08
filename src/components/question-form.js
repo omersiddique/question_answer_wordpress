@@ -11,6 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import SnackBar from './snackbar';
 import Backdrop from './backdrop';
 import "./login-form.css"
+import getQuestions from "./getQuestions.js"
 
 const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) => {
  // const [open, setOpen] = React.useState(false);
@@ -20,33 +21,17 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
   const [error, setError] = React.useState(false);
   const [returnMessage, setMessage] = React.useState(false);
 
-
+  
   const postQuestion = async(event) => {
     event.preventDefault();
     changeLoading(true);    
     setMessage(false);
-    const login_url = `https://hikmahsessions.com/control-panelz/wp-json/wp/v2/question?per_page=30`;
-    const login_data = {
-      title,
-      content,
-      "status" : "publish"
-    }
-    const requestOptions = {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json', 
-        'Authorization': `Bearer ${user.token}`
-      },
-      body: JSON.stringify(login_data),
-    }
-    const response = await fetch(login_url, requestOptions);
-    const data = await response.json();   
+    const response = getQuestions(title, content, user.token);      
+    const data = await response.json(); 
     changeLoading(false);
-    //console.log(typeof questions);
-    //console.log('REDUX:', questions);
     if (response.status === 201) {
       setError(false);   
       setMessage(`Successfully added question!`);
-      //console.log(data);
       updateQuestion(data);
       ownProps.hide();
     }

@@ -15,6 +15,7 @@ import SnackBar from '../snackbar';
 import Backdrop from '../backdrop';
 import "../login-form.css"
 import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core';
+import getQuestions from "../getQuestions"
 
 const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) => {
  // const [open, setOpen] = React.useState(false);
@@ -34,7 +35,7 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
     const login_data = {
       post_title: title,
       post_content: content,
-      question_ID : String(ownProps.questionID)
+      question_ID : String(ownProps.questionID),
     }
     const requestOptions = {
       method: 'POST',
@@ -43,18 +44,24 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
       },
       body: JSON.stringify(login_data),
     }
-    console.log(JSON.stringify(requestOptions, null, 2)  );
     const response = await fetch(login_url, requestOptions);
-    const data = await response.json();   
-    changeLoading(false);
-    //console.log(typeof questions);
-    //console.log('REDUX:', questions);
-    if (response.status === 201) {
+    const data = await response.json(); 
+    if (response.status === 200) {
       setError(false);   
       setMessage(`Successfully added question!`);
-      //console.log(data);
-      updateQuestion(data);
-      ownProps.hide();
+
+      const questionsRequest = await getQuestions({isNewQuestion: false});
+      console.log(questionsRequest);
+      if (questionsRequest.status === 200){
+        const questionData = await questionsRequest.json();
+        //console.log(questionData);
+        updateQuestion([questionData]);
+      }
+      else{
+        setError(true);
+        setMessage(`Error getting questions`);
+      }     
+    changeLoading(false);
     }
     else{
       setError(true);
@@ -77,7 +84,7 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
       {isLoggedIn ?            
        <form onSubmit={postQuestion}>         
         <Box paddingTop={3} />
-      <Typo variant="body2" color="black" className="small-instruction" component="p">Enter a short title and type in your answer below: {ownProps.questionID}</Typo>
+      <Typo variant="body2" color="black" className="small-instruction" component="p">Enter a short title and type in your answer below:</Typo>
         <Box marginTop={3} />
         <FormControl  fullWidth variant="outlined">                       
          
@@ -130,7 +137,7 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
  // dispatch function is provided to the component automatically, here we pass it to the mapDispatchToProps function first and return the increment 
  // action creator to dispatch a change to the state
   const mapDispatchToProps = dispatch => {
-    return { updateQuestion: (newQuestion) => dispatch({ type: `ADDQUESTION`, payload: newQuestion }) }
+    return { updateQuestion: (newQuestion) => dispatch({ type: `QUESTIONUPDATE`, payload: newQuestion }) }
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormDialog)

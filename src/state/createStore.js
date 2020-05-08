@@ -31,14 +31,22 @@ const reducer = (state, action) => {
 
     if (action.type === `ADDQUESTION`){
         let newQuestions = { ...state.questions };
+        // unshift adds to the beginning of the array
         newQuestions[0].unshift(action.payload);
 
         let newState = {...state, questions: newQuestions };
-        // console.log(newState.questions);
-        // console.log(state.questions);
+         console.log(newState.questions);
+         console.log(state.questions);
         return newState;
 
     }
+
+    if (action.type === `ADDANSWER`){
+       console.log('This is it');
+       console.log(state);
+       return state;
+    }
+
     // default case
     return state;
 }

@@ -26,7 +26,6 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
       fetch(`https://hikmahsessions.com/control-panelz/wp-json/wp/v2/question?per_page=30`)
       .then(async response => {
         let data = await response.json();
-        console.log(data);
         updateQuestions([data]);
       })
     }, [])
