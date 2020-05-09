@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import AppBar from "./appbar"
 import Header from "./header"
 import QuestionMenu from "./question-menu"
+import Footer from "./footer"
 
 const mapStateToProps = ({isLoggedIn}) =>{
     return {isLoggedIn}
@@ -20,8 +21,8 @@ export default connect(mapStateToProps)( ({ isLoggedIn,children }) => (
         { isLoggedIn ? <QuestionMenu /> : '' }     
             <Typography component="div" style={{ }}>
                 { children }
-            </Typography>
-            
+            </Typography>            
         </Container>
+        <Footer />
     </React.Fragment>
 ))

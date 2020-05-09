@@ -27,7 +27,7 @@ const reducer = (state, action) => {
 
     if (action.type === `QUESTIONUPDATE`){
         // console.log(state);
-        // console.log(action.payload);
+         console.log(action.payload);
         return {...state, questions:{...action.payload}};
     }
 

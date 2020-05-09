@@ -22,6 +22,26 @@
     background-color: gold !important;
     color: black !important;
 }
+.shariah-color{
+    background-color: darkkhaki !important;
+    color: black !important;
+}
+.history-color{
+    background-color: rgb(224, 207, 15) !important;
+    color: black !important;
+
+}
+.science-color{
+    background-color: rgb(111, 9, 158) !important;
+    color: white !important;
+
+}
+.politics-color{
+    background-color: rgb(187, 22, 22) !important;
+    color: white !important;
+
+}
+
 .chip{
     margin-left:0.3rem;
 }

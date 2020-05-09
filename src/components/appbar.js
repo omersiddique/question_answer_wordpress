@@ -10,7 +10,7 @@ import Menu from "./menu"
 
 // accept the const state and the increment dispatch function
 const AppBarFilled = () => (
-    <AppBar position="static" color="primary">
+    <AppBar position="sticky" color="primary">
         <Toolbar>
             <IconButton edge="start"  color="primary" aria-label="menu">
             </IconButton>
