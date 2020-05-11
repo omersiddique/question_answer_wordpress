@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
+import {categoryReducer, noCategories} from './category_reducer';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -36,19 +37,14 @@ const MenuProps = {
   },
 };
 
-const names = [
-  {id: 3, title: 'Ethics'},
-  {id: 5, title: 'History'},
-  {id: 9, title: 'Law'},
-  {id: 2, title: 'Philosophy'},
-  {id: 8, title: 'Politics'},
-  {id: 7, title: 'Psychology'},
-  {id: 10, title: 'Science'},
-  {id: 4, title: 'Sociology'},
-  {id: 6, title: 'Spirituality'},
-  {id: 11, title: 'Shariah'},
-  {id: 12, title: 'Quran'},
-];
+const names = [];
+
+for(let i = 2; i <= noCategories; i++){
+  let categoryName = categoryReducer(i);
+  categoryName = categoryName.charAt(0).toUpperCase() + categoryName.slice(1);
+  names.push({id: i, title: categoryName});
+}
+
 
 export default function MultipleSelect(props) {
   const classes = useStyles();

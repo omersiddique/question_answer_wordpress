@@ -1,4 +1,4 @@
-export default function categoryReducer(catId){
+export function categoryReducer(catId){
     switch(catId){
         case 2:
             return 'philosophy'
@@ -27,3 +27,5 @@ export default function categoryReducer(catId){
         
     }
 }
+
+export const noCategories = 12;

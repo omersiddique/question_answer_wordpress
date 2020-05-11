@@ -16,3 +16,7 @@
 .footerText a{
     color: white;
 }
+
+.MuiTypography-colorTextSecondary {
+    color: rgb(0, 0, 0) !important;
+}

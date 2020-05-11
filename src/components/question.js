@@ -15,7 +15,7 @@ import Chip from "@material-ui/core/Chip"
 import List from "@material-ui/core/List"
 import TimeAgo from 'react-timeago'
 import "./question.css"
-import categoryReducer from "./category_reducer"
+import {categoryReducer} from "./category_reducer"
 import Answer from "./answer/answer"
 import NewAnswerForm from "./answer/new-answer-form"
 import AnswerTabs from "./answer/answer-tabs.js"
