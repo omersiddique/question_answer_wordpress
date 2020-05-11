@@ -8,11 +8,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Box from '@material-ui/core/Box'
+import Box from '@material-ui/core/Box';
 import SnackBar from './snackbar';
 import Backdrop from './backdrop';
 import "./login-form.css"
-import getQuestions from "./getQuestions"
+import getQuestions from './functions/getQuestions';
 import CategorySelect from './category-select'
 
 const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) => {

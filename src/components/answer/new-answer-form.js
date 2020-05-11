@@ -9,7 +9,7 @@ import SnackBar from '../snackbar';
 import Backdrop from '../backdrop';
 import "../login-form.css"
 import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core';
-import getQuestions from "../getQuestions"
+import getQuestions from "../functions/getQuestions"
 
 const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) => {
  // const [open, setOpen] = React.useState(false);

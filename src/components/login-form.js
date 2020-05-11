@@ -6,10 +6,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Type from '@material-ui/core/Typography';
 import SnackBar from './snackbar';
 import Backdrop from './backdrop';
 import {connect} from "react-redux"
 import "./login-form.css"
+import SignUp from './signup-form';
+import loginFunction from './functions/login';
 
 const FormDialog = ({isLoggedIn, user, updateUser}) => {
   const [open, setOpen] = React.useState(false);
@@ -18,6 +21,7 @@ const FormDialog = ({isLoggedIn, user, updateUser}) => {
   const [loading, changeLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [returnMessage, setMessage] = React.useState(false);
+  const [showSignup, setSignup] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,20 +31,18 @@ const FormDialog = ({isLoggedIn, user, updateUser}) => {
     setOpen(false);
   };
 
+  const openSignUpForm = () => {
+    setSignup(true);
+  }
+
+  const closeSignUpForm = () => {
+    setSignup(false);
+  }
+
   const login = async() => {
     changeLoading(true);
     setMessage(false);
-    const login_url = `https://hikmahsessions.com/control-panelz/wp-json/jwt-auth/v1/token`;
-    const login_data = {
-      username,
-      password
-    }
-    const requestOptions = {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(login_data),
-    }
-    const response = await fetch(login_url, requestOptions);
+    const response = await loginFunction(username, password);
     const data = await response.json();
     //console.log(data);
     changeLoading(false);
@@ -63,6 +65,12 @@ const FormDialog = ({isLoggedIn, user, updateUser}) => {
 
   const updatePassword = (event) => {
     setPassword(event.target.value);
+  }
+
+  const openSignUp = (event) =>{
+    event.preventDefault();
+    handleClose();
+    setSignup(true);
   }
 
   return (
@@ -106,7 +114,10 @@ const FormDialog = ({isLoggedIn, user, updateUser}) => {
             Login 
           </Button>
         </DialogActions>
+      <Type align='center'>Don't have an account? <a href="#" onClick={openSignUp}>Sign up.</a></Type>
+     
       </Dialog> : ``}
+      <SignUp openSign={showSignup} closeDialog={closeSignUpForm} openDialog={openSignUpForm}  />
     </div>
   );
 }
