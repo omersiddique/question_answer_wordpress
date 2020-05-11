@@ -37,7 +37,12 @@
 
 }
 .politics-color{
-    background-color: rgb(187, 22, 22) !important;
+    background-color: rgb(24, 197, 53) !important;
+    color: white !important;
+
+}
+.quran-color{
+    background-color: rgb(85, 57, 57) !important;
     color: white !important;
 
 }

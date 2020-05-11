@@ -46,7 +46,8 @@ const names = [
   {id: 10, title: 'Science'},
   {id: 4, title: 'Sociology'},
   {id: 6, title: 'Spirituality'},
-  {id: 11, title: 'Shariah'}
+  {id: 11, title: 'Shariah'},
+  {id: 12, title: 'Quran'},
 ];
 
 export default function MultipleSelect(props) {

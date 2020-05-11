@@ -20,6 +20,8 @@ export default function categoryReducer(catId){
             return 'science'
         case 11:
             return 'shariah'
+        case 12:
+            return 'quran'
         default:
             return 'uncategorized'
         
