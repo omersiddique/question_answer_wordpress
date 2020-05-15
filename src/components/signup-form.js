@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -23,6 +23,8 @@ const FormDialog = ({ownProps, updateUser}) => {
   const [error, setError] = React.useState(false);
   const [returnMessage, setMessage] = React.useState(false);
   const [password_confirm, confirmPassword] = React.useState('');
+  const [isDisabled, changeDisabledStatus] = React.useState(true);
+  const [passwordsMatch, changePasswordsMatch] = React.useState(true);
 
 
   const login = async(event) => {
@@ -56,9 +58,25 @@ const FormDialog = ({ownProps, updateUser}) => {
     setPassword(event.target.value);
   }
 
+  const updateConfirmPassword = (event) =>{
+    confirmPassword(event.target.value);
+  }
+
   const updateEmail = (event) => {
     setEmail(event.target.value);
   }
+
+  useEffect( () => {
+    let match = password === password_confirm;
+    if (!match){
+      changePasswordsMatch(false);
+      changeDisabledStatus(true);
+    }
+    else{
+      changePasswordsMatch(true);
+      changeDisabledStatus(false);
+    }
+  },[password,password_confirm] );
 
   return (
     <div>      
@@ -94,6 +112,7 @@ const FormDialog = ({ownProps, updateUser}) => {
                   id="email"
                   value={email}
                   onChange={updateEmail}
+                  type='email'
                   labelWidth={80}
                   fullWidth
                   required
@@ -109,6 +128,7 @@ const FormDialog = ({ownProps, updateUser}) => {
                   value={password}
                   onChange={updatePassword}
                   labelWidth={120}
+                  type='password'
                   fullWidth
                   required
                   startAdornment={<InputAdornment position="start"></InputAdornment>}
@@ -120,20 +140,22 @@ const FormDialog = ({ownProps, updateUser}) => {
             <OutlinedInput
                   id="password_confirm"
                   value={password_confirm}
-                  onChange={confirmPassword}
-                  labelWidth={120}
-                  fullWidth
+                  onChange={updateConfirmPassword}
+                  labelWidth={135}
+                  type='password'
+                  error={password !== password_confirm}
                   required
+                  fullWidth                  
                   startAdornment={<InputAdornment position="start"></InputAdornment>}
-            />         
+            />                  
          </FormControl>   
-
+         <span style={{color:'red'}}>{passwordsMatch ? '' : 'Passwords do not match!'} </span>
         </DialogContent>
         <DialogActions>
           <Button onClick={ownProps.closeDialog} color="primary">
             Cancel
           </Button>
-          <Button type='submit' color="primary">
+          <Button type='submit' color="primary" disabled={isDisabled}>
             Signup 
           </Button>
         </DialogActions>             

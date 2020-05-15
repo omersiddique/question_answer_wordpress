@@ -52,7 +52,12 @@ export default function QuestionCard(props) {
   }
 
   function Categories(categories) {
-    return props.categories.map( (id) => {
+    // console.log('INCOMING CATEGORIES', categories);
+    // let temp = Object.values(categories['categories']);
+    // console.log('Keys', temp);
+    return Object.values(categories['categories']).map( (id) => {      
+      id = parseInt(id);
+      console.log('IDS', id);
         return(
         <Chip 
               label={categoryReducer(id)}

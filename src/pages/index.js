@@ -23,7 +23,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
 
     useEffect( () => {
       // get data from Wordpress
-      fetch(`https://hikmahsessions.com/control-panelz/wp-json/wp/v2/question?per_page=30`)
+      fetch(`https://hikmahsessions.com/control-panelz/wp-json/iman-shield/v1/questions`)
       .then(async response => {
         let data = await response.json();
         updateQuestions([data]);
@@ -50,7 +50,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
           (questions) ?
           questions[0].map( item => ( 
               <>         
-                <QuestionCard title={item.title.rendered} question={item.content.rendered} categories={item.categories} update={item.date} key={item.id} questionID={item.id} answers={item.ACF.answers} /> 
+                <QuestionCard title={item.title} question={item.question} categories={item.categories} update={item.date} key={item.id} questionID={item.id} answers={item.answers} /> 
               </>        
                 )
             ) 
