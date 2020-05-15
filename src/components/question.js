@@ -44,20 +44,23 @@ export default function QuestionCard(props) {
   var isAnswers = true;
   const handleExpandClick = () => {
     setExpanded(!expanded);
-  };
+  };  
+  let dateProper = props.update + 'Z';
 
   // TODO: props.answers == undefined when a question is added from backend but and empty string wnen updated from backend
-  if (typeof props.answers === 'undefined' || props.answers === ''){
+  if (typeof props.answers === 'undefined' || props.answers.length === 0 ){
     isAnswers = false;
   }
 
+  // console.log('Answers', props.answers);
+  // console.log('Answers', isAnswers);
+
   function Categories(categories) {
-    // console.log('INCOMING CATEGORIES', categories);
+     console.log('INCOMING CATEGORIES', categories);
     // let temp = Object.values(categories['categories']);
     // console.log('Keys', temp);
     return Object.values(categories['categories']).map( (id) => {      
       id = parseInt(id);
-      console.log('IDS', id);
         return(
         <Chip 
               label={categoryReducer(id)}
@@ -73,7 +76,7 @@ export default function QuestionCard(props) {
       <List>
         {
           (isAnswers) ? props.answers.map( answer => (
-            (answer.post_status === 'publish') ? <Answer key={answer.ID} title={answer.post_title} content={answer.post_content} /> : '' 
+            (answer.post_status === 'publish') ? <Answer key={answer.ID} title={answer.title} content={answer.content} date={answer.date} author={answer.author} /> : '' 
           )) : '' 
         }
       </List>
@@ -88,7 +91,7 @@ export default function QuestionCard(props) {
              </React.Fragment> 
         } 
         
-        subheader={ <TimeAgo date={props.update} live={false} /> } // Date Modified
+        subheader={ <TimeAgo date={dateProper} live={false} /> } // Date Modified
       />
       <CardContent>
         {/* Question */}

@@ -26,19 +26,21 @@ const reducer = (state, action) => {
     }
 
     if (action.type === `QUESTIONUPDATE`){
-        // console.log(state);
-         console.log(action.payload);
-        return {...state, questions:{...action.payload}};
+        //  console.log(state);
+        //  console.log(action.payload);
+         let newState = {...state, questions:{...action.payload}};
+         //console.log(newState);
+         return newState;
     }
 
     if (action.type === `ADDQUESTION`){
-        let newQuestions = { ...state.questions };
-        // unshift adds to the beginning of the array
-        newQuestions[0].unshift(action.payload);
+        // let newQuestions = { ...state.questions };
+        // // unshift adds to the beginning of the array
+        // newQuestions.unshift(action.payload);
 
-        let newState = {...state, questions: newQuestions };
-        //  console.log(newState.questions);
-        //  console.log(state.questions);
+        let newState = {...state, questions: action.payload };
+           console.log(newState);
+           console.log(state);
         return newState;
 
     }

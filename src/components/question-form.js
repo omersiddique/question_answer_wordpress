@@ -28,11 +28,12 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
     event.preventDefault();
     changeLoading(true);    
     setMessage(false);
-    const response = await getQuestions(title, content, categoryIDs, user.token, true);    
-    console.log(response);  
-    const data = await response.json(); 
+    const response = await getQuestions(title, content, categoryIDs, user.token, true);   
+    const data = await response.json();   
+    console.log('Returned frpm POST QUESTION', data); 
     changeLoading(false);
-    if (response.status === 201) {
+    if (response.status === 200) {
+      console.log('ACCESSED')
       setError(false);   
       setMessage(`Successfully added question!`);
       updateQuestion(data);

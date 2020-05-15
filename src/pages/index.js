@@ -26,7 +26,8 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
       fetch(`https://hikmahsessions.com/control-panelz/wp-json/iman-shield/v1/questions`)
       .then(async response => {
         let data = await response.json();
-        updateQuestions([data]);
+        //console.log('INDEX PAGE', data);
+        updateQuestions(data);
       })
     }, [])
 
@@ -48,9 +49,9 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
           </Grid>      
         {          
           (questions) ?
-          questions[0].map( item => ( 
+          Object.values(questions).map( item => ( 
               <>         
-                <QuestionCard title={item.title} question={item.question} categories={item.categories} update={item.date} key={item.id} questionID={item.id} answers={item.answers} /> 
+                <QuestionCard title={item.title} question={item.question} categories={item.categories} update={item.update} key={item.id} questionID={item.id} answers={item.answers} /> 
               </>        
                 )
             ) 

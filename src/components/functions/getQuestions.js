@@ -1,5 +1,5 @@
 export default async function getQuestions(title, content, categories, token, isNewQuestion){
-    const login_url = `https://hikmahsessions.com/control-panelz/wp-json/wp/v2/question?per_page=30`;
+    const login_url = `https://hikmahsessions.com/control-panelz/wp-json/iman-shield/v1/questions`;
 
     if (isNewQuestion){
         const login_data = {
