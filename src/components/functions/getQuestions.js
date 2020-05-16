@@ -9,7 +9,6 @@ export default async function getQuestions(title, content, categories, token, is
           "status" : "publish"
         }
 
-        console.log('Login Data', login_data);
         
         const requestOptions = {
             method: 'POST',
@@ -23,7 +22,9 @@ export default async function getQuestions(title, content, categories, token, is
         return await fetch(login_url, requestOptions);
     }
     else{
-        return await fetch(login_url);
+        let result = await fetch(login_url);
+        //console.log('GET Qustions', result);
+        return result;
     }
 
 }

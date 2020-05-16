@@ -1,5 +1,6 @@
 import {createStore as reduxCreateStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
+import cloneDeep from 'lodash/cloneDeep'
 
 /**
  * This is a reducer, a pure function with (state, action) => state signature.
@@ -46,9 +47,14 @@ const reducer = (state, action) => {
     }
 
     if (action.type === `ADDANSWER`){
-    //    console.log('This is it');
-    //    console.log(state);
-       return state;
+       console.log(state);
+      // let newState = {...state, questions: {}};
+      let newState = cloneDeep(state);
+      // console.log('OBJECT VALUES', Object.values(newState.questions).find(element => element.id === action.payload.question).answers);
+       let questionToUpdate = Object.values(newState.questions).find(element => element.id === action.payload.question);
+       questionToUpdate.answers.push(action.payload);
+       console.log(newState);
+       return newState;
     }
 
     // default case

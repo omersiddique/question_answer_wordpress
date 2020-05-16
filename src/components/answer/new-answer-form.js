@@ -43,18 +43,20 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
     if (response.status === 200) {
       setError(false);   
       setMessage(`Successfully added question!`);
+      console.log('NEW ANWSER', data);
+      updateQuestion(data);
 
-      const questionsRequest = await getQuestions({isNewQuestion: false});
-      console.log(questionsRequest);
-      if (questionsRequest.status === 200){
-        const questionData = await questionsRequest.json();
-        //console.log(questionData);
-        updateQuestion([questionData]);
-      }
-      else{
-        setError(true);
-        setMessage(`Error getting questions`);
-      }     
+      //const questionsRequest = await getQuestions({isNewQuestion: false});
+      //console.log(questionsRequest);
+      // if (questionsRequest.status === 200){
+      //   const questionData = await questionsRequest.json();
+      //   //console.log(questionData);
+      //   updateQuestion([questionData]);
+      // }
+      // else{
+      //   setError(true);
+      //   setMessage(`Error getting questions`);
+      // }     
     changeLoading(false);
     }
     else{
@@ -131,7 +133,7 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
  // dispatch function is provided to the component automatically, here we pass it to the mapDispatchToProps function first and return the increment 
  // action creator to dispatch a change to the state
   const mapDispatchToProps = dispatch => {
-    return { updateQuestion: (newQuestion) => dispatch({ type: `QUESTIONUPDATE`, payload: newQuestion }) }
+    return { updateQuestion: (newQuestion) => dispatch({ type: `ADDANSWER`, payload: newQuestion }) }
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormDialog)

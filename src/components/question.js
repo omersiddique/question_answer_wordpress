@@ -56,9 +56,6 @@ export default function QuestionCard(props) {
   // console.log('Answers', isAnswers);
 
   function Categories(categories) {
-     console.log('INCOMING CATEGORIES', categories);
-    // let temp = Object.values(categories['categories']);
-    // console.log('Keys', temp);
     return Object.values(categories['categories']).map( (id) => {      
       id = parseInt(id);
         return(
@@ -71,13 +68,14 @@ export default function QuestionCard(props) {
     })
   } 
 
+  //console.log('PROPS>ANSWERS', props.answers);
   const allAnswers = (
     <CardContent>          
       <List>
         {
           (isAnswers) ? props.answers.map( answer => (
-            (answer.post_status === 'publish') ? <Answer key={answer.ID} title={answer.title} content={answer.content} date={answer.date} author={answer.author} /> : '' 
-          )) : '' 
+            <Answer key={answer.ID} title={answer.title} content={answer.content} date={answer.date} author={answer.author} /> 
+          )) : 'No answers yet...be the first to post' 
         }
       </List>
     </CardContent>);

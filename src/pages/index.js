@@ -26,7 +26,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
       fetch(`https://hikmahsessions.com/control-panelz/wp-json/iman-shield/v1/questions`)
       .then(async response => {
         let data = await response.json();
-        //console.log('INDEX PAGE', data);
+        console.log('INDEX PAGE', data);
         updateQuestions(data);
       })
     }, [])

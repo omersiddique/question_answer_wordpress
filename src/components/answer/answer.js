@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 let switchColours = false;
-
 export default function AlignItemsList(props) {
   const classes = useStyles();
   let author = props.author.slice(0,1).toUpperCase();
