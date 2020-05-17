@@ -51,7 +51,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
           (questions) ?
           Object.values(questions).map( item => ( 
               <>         
-                <QuestionCard title={item.title} question={item.question} categories={item.categories} update={item.update} key={item.id} questionID={item.id} answers={item.answers} /> 
+                <QuestionCard title={item.title} question={item.question} categories={item.categories} update={item.update} key={item.id} questionID={item.id} answers={item.answers} hearts={item.hearts} /> 
               </>        
                 )
             ) 

@@ -48,9 +48,7 @@ const reducer = (state, action) => {
 
     if (action.type === `ADDANSWER`){
        console.log(state);
-      // let newState = {...state, questions: {}};
       let newState = cloneDeep(state);
-      // console.log('OBJECT VALUES', Object.values(newState.questions).find(element => element.id === action.payload.question).answers);
        let questionToUpdate = Object.values(newState.questions).find(element => element.id === action.payload.question);
        questionToUpdate.answers.push(action.payload);
        console.log(newState);

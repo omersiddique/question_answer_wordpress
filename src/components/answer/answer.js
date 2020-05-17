@@ -8,6 +8,10 @@ import TimeAgo from 'react-timeago'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
+import CardActions from '@material-ui/core/CardActions';
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +36,19 @@ const useStyles = makeStyles((theme) => ({
   },
   answer:{
     paddingTop: `1rem`,
+  },
+  heart:{
+    color: '#a83f39',
+  },
+  heartNumber:{
+    fontSize: `1rem`,
+    fontWeight: `bold`,
+    marginLeft: `0.2rem`,
+    marginTop: `0.3rem`,
+  },
+  cardArea:{
+    display: `block`,
+    textAlign: `right`,
   }
 }));
 
@@ -55,6 +72,14 @@ export default function AlignItemsList(props) {
         />
         <Typography>{<small>posted <TimeAgo date={dateProper} live={false} /></small>}</Typography>
       </ListItem>
+      <CardActions disableSpacing className={classes.cardArea}>
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon className={classes.heart} /> <span className={classes.heartNumber}>{props.hearts}</span>
+        </IconButton>
+        <IconButton aria-label="share">
+          <ShareIcon />
+        </IconButton>
+      </CardActions>
       <Divider variant="inset" component="li" />      
       {switchColours = !switchColours}
     </>

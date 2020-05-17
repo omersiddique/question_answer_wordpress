@@ -19,6 +19,7 @@ import {categoryReducer} from "./category_reducer"
 import Answer from "./answer/answer"
 import NewAnswerForm from "./answer/new-answer-form"
 import AnswerTabs from "./answer/answer-tabs.js"
+import { red } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,14 +37,31 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
+  heart:{
+    color: '#a83f39',
+  },
+  heartNumber:{
+    fontSize: `1rem`,
+    fontWeight: `bold`,
+    marginLeft: `0.2rem`,
+    marginTop: `0.3rem`,
+  },
+  readMore:{
+    fontSize: `0.7rem`,
+  }
 }));
 
 export default function QuestionCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [displayRead, setDispalyRead] = React.useState('block');
   var isAnswers = true;
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    if (displayRead === 'block') {
+      setDispalyRead('none');
+    }
+    else setDispalyRead('block');   
   };  
   let dateProper = props.update + 'Z';
 
@@ -99,7 +117,7 @@ export default function QuestionCard(props) {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          <FavoriteIcon className={classes.heart} /> <span className={classes.heartNumber}>{props.hearts}</span>
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
@@ -112,7 +130,7 @@ export default function QuestionCard(props) {
           aria-expanded={expanded}
           aria-label="show more"
         >
-          <ExpandMoreIcon />
+         <small style={ {display: displayRead} } className={classes.readMore}>Click to see {props.answers.length} answer{(props.answers.length === 1) ? '' : 's'} </small><ExpandMoreIcon />
         </IconButton>
       </CardActions>
 
