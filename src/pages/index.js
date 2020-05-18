@@ -37,7 +37,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
           <Typo variant="h3">Iman Shield</Typo>
           <Grid container>
             <Grid item xs={6}>
-              <Typo style={{fontStyle:'italic'}}>Post a question and have it answered by the community.</Typo>
+              <Typo style={{fontStyle:'italic'}}>Have a doubt about Islam? Chances are there is a good answer out there that you just don't know yet! Post a question and have it answered by the community.</Typo>
             </Grid> 
             <Grid item xs={6}>
               { isLoggedIn ? 

@@ -130,7 +130,7 @@ export default function QuestionCard(props) {
           aria-expanded={expanded}
           aria-label="show more"
         >
-         <small style={ {display: displayRead} } className={classes.readMore}>Click to see {props.answers.length} answer{(props.answers.length === 1) ? '' : 's'} </small><ExpandMoreIcon />
+         <small style={ {display: displayRead} } className={classes.readMore}>Click to see {props.answers.length} answer{props.answers.length === 1 ? '' : 's'} </small><ExpandMoreIcon />
         </IconButton>
       </CardActions>
 
