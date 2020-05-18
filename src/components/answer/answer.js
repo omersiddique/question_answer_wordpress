@@ -70,10 +70,10 @@ export default function AlignItemsList(props) {
              <div className={classes.answer} dangerouslySetInnerHTML={ {__html: props.content} }></div>
           }
         />
-        <Typography>{<small>posted <TimeAgo date={dateProper} live={false} /></small>}</Typography>
+        <Typography style={{width: `100%`}}>{<small>posted <TimeAgo date={dateProper} live={false} /></small>}</Typography>
       </ListItem>
       <CardActions disableSpacing className={classes.cardArea}>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={() => props.heartCallback(props.id,'answer')}>
           <FavoriteIcon className={classes.heart} /> <span className={classes.heartNumber}>{props.hearts}</span>
         </IconButton>
         <IconButton aria-label="share">

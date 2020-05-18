@@ -19,7 +19,9 @@ import {categoryReducer} from "./category_reducer"
 import Answer from "./answer/answer"
 import NewAnswerForm from "./answer/new-answer-form"
 import AnswerTabs from "./answer/answer-tabs.js"
-import { red } from '@material-ui/core/colors';
+import addHeartToDatabase from "./functions/hearts"
+import {connect} from "react-redux"
+import SnackBar from './snackbar'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +53,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function QuestionCard(props) {
+
+
+function QuestionCard({ownProps,user,isLoggedIn}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [displayRead, setDispalyRead] = React.useState('block');
@@ -63,15 +67,23 @@ export default function QuestionCard(props) {
     }
     else setDispalyRead('block');   
   };  
-  let dateProper = props.update + 'Z';
+  let dateProper = ownProps.update + 'Z';
 
   // TODO: props.answers == undefined when a question is added from backend but and empty string wnen updated from backend
-  if (typeof props.answers === 'undefined' || props.answers.length === 0 ){
+  if (typeof ownProps.answers === 'undefined' || ownProps.answers.length === 0 ){
     isAnswers = false;
   }
 
-  // console.log('Answers', props.answers);
-  // console.log('Answers', isAnswers);
+  async function addHeart(id,type){
+    if (isLoggedIn){
+       let result = await addHeartToDatabase(ownProps.title,type,id,user.token);
+       console.log('ADD HEART RESULT', result);
+    }
+    else{
+      alert('You need to be logged in to heart!')
+    }
+   
+  }
 
   function Categories(categories) {
     return Object.values(categories['categories']).map( (id) => {      
@@ -91,19 +103,30 @@ export default function QuestionCard(props) {
     <CardContent>          
       <List>
         {
-          (isAnswers) ? props.answers.map( answer => (
-            <Answer key={answer.ID} title={answer.title} content={answer.content} date={answer.date} author={answer.author} /> 
+          (isAnswers) ? ownProps.answers.map( answer => (
+            <Answer 
+              key={answer.ID} 
+              id={answer.ID}
+              title={answer.title} 
+              content={answer.content} 
+              date={answer.date}
+              author={answer.author} 
+              hearts={answer.hearts} 
+              heartCallback={addHeart} 
+            /> 
           )) : 'No answers yet...be the first to post' 
         }
       </List>
     </CardContent>);
+
+ 
 
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
             <React.Fragment>
-                <Categories categories={props.categories} />
+                <Categories categories={ownProps.categories} />
              </React.Fragment> 
         } 
         
@@ -111,13 +134,16 @@ export default function QuestionCard(props) {
       />
       <CardContent>
         {/* Question */}
-        <Typography variant="body2" color="textSecondary" component="p" dangerouslySetInnerHTML={ {__html: `<h2>${props.title}</h2>  ${props.question}`} }>
+        <Typography variant="body2" color="textSecondary" component="p" dangerouslySetInnerHTML={ {__html: `<h2>${ownProps.title}</h2>  ${ownProps.question}`} }>
        
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon className={classes.heart} /> <span className={classes.heartNumber}>{props.hearts}</span>
+        <IconButton
+          onClick={() => addHeart(ownProps.questionID, 'question')}
+        >
+          <FavoriteIcon 
+          aria-label="add to favorites"  className={classes.heart} /> <span className={classes.heartNumber}>{ownProps.hearts}</span>
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
@@ -130,14 +156,20 @@ export default function QuestionCard(props) {
           aria-expanded={expanded}
           aria-label="show more"
         >
-         <small style={ {display: displayRead} } className={classes.readMore}>Click to see {props.answers.length} answer{props.answers.length === 1 ? '' : 's'} </small><ExpandMoreIcon />
+         <small style={ {display: displayRead} } className={classes.readMore}>Click to see {ownProps.answers.length} answer{ownProps.answers.length === 1 ? '' : 's'} </small><ExpandMoreIcon />
         </IconButton>
       </CardActions>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <AnswerTabs answerForm={<NewAnswerForm questionID={props.questionID} />} answers={allAnswers} />       
+        <AnswerTabs answerForm={<NewAnswerForm questionID={ownProps.questionID} />} answers={allAnswers} />       
       </Collapse>
       
     </Card>
   );
 }
+
+const mapStateToProps = ({isLoggedIn, user}, ownProps) => {
+  return {isLoggedIn, user, ownProps};
+}
+
+export default connect(mapStateToProps)(QuestionCard);
