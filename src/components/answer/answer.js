@@ -64,7 +64,7 @@ export default function AlignItemsList(props) {
         <Avatar className={switchColours ? classes.orange : classes.purple}>{author}</Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={<div>{props.title} <br /><small className={[classes.author, switchColours ? classes.orange : classes.purple].join(' ')}>{props.author}</small><br /></div> }
+          primary={<div>{props.title} <br /><small className={[classes.author, switchColours ? classes.orange : classes.purple].join(' ')}>Answered by {props.author}</small><br /></div> }
           
           secondary={
              <div className={classes.answer} dangerouslySetInnerHTML={ {__html: props.content} }></div>
