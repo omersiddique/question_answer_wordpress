@@ -17,5 +17,6 @@ export default async function saveHeart(title,type,id,token){
             body: JSON.stringify(login_data),
         }
         
-        return await fetch(login_url, requestOptions);
+        let response = await fetch(login_url, requestOptions);
+        return await response.json();
 }

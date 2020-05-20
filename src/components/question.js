@@ -59,6 +59,7 @@ function QuestionCard({ownProps,user,isLoggedIn}) {
   const [expanded, setExpanded] = React.useState(false);
   const [displayRead, setDispalyRead] = React.useState('block');
   const [enableHeart, changeHeart] = React.useState(false);
+  const [heartCount, heartUpdate] = React.useState(ownProps.hearts);
   var isAnswers = true;
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -77,6 +78,12 @@ function QuestionCard({ownProps,user,isLoggedIn}) {
   async function addHeart(id,type){
     if (isLoggedIn){
        let result = await addHeartToDatabase(ownProps.title,type,id,user.token);
+       console.log(result);
+       if (result){
+         let heartCountInt = parseInt(heartCount);
+         heartCountInt++;
+         heartUpdate(heartCountInt);
+       }
        changeHeart(true);
     }
     else{
@@ -145,7 +152,7 @@ function QuestionCard({ownProps,user,isLoggedIn}) {
           disabled={enableHeart}
         >
           <FavoriteIcon 
-          aria-label="add to favorites"  className={classes.heart} /> <span className={classes.heartNumber}>{ownProps.hearts}</span>
+          aria-label="add to favorites"  className={classes.heart} /> <span className={classes.heartNumber}>{heartCount}</span>
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
