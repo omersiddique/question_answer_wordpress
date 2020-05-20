@@ -59,22 +59,23 @@ export default function AlignItemsList(props) {
   let dateProper = props.date + 'Z';
   return (
     <>
-      <ListItem alignItems="flex-start">
-      <ListItemAvatar>
+      <ListItem alignItems="flex-start" className={`answerList`}>
+      <ListItemAvatar className={`avatorAnswer`}>
         <Avatar className={switchColours ? classes.orange : classes.purple}>{author}</Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={<div>{props.title} <br /><small className={[classes.author, switchColours ? classes.orange : classes.purple].join(' ')}>Answered by {props.author}</small><br /></div> }
+          primary={<div>{props.title} <br /><small className={[classes.author, switchColours ? classes.orange : classes.purple].join(' ')}>Answered by {props.author}</small><br />
+          <Typography>{<small>posted <TimeAgo date={dateProper} live={false} /></small>}</Typography></div> }
           
           secondary={
-             <div className={classes.answer} dangerouslySetInnerHTML={ {__html: props.content} }></div>
+             <div className={['answerText',classes.answer].join(' ')} dangerouslySetInnerHTML={ {__html: props.content} }></div>
           }
         />
-        <Typography style={{width: `100%`}}>{<small>posted <TimeAgo date={dateProper} live={false} /></small>}</Typography>
+        
       </ListItem>
       <CardActions disableSpacing className={classes.cardArea}>
-        <IconButton aria-label="add to favorites" onClick={() => props.heartCallback(props.id,'answer')}>
-          <FavoriteIcon className={classes.heart} /> <span className={classes.heartNumber}>{props.hearts}</span>
+        <IconButton disabled={props.enableHeart}  aria-label="add to favorites" onClick={() => props.heartCallback(props.id,'answer')}>
+          <FavoriteIcon  className={classes.heart} /> <span className={classes.heartNumber}>{props.hearts}</span>
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />

@@ -22,10 +22,12 @@ export function categoryReducer(catId){
             return 'shariah'
         case 12:
             return 'quran'
+        case 13:
+            return 'aqeeda'
         default:
             return 'uncategorized'
         
     }
 }
 
-export const noCategories = 12;
+export const noCategories = 13;

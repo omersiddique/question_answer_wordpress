@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -21,7 +21,6 @@ import NewAnswerForm from "./answer/new-answer-form"
 import AnswerTabs from "./answer/answer-tabs.js"
 import addHeartToDatabase from "./functions/hearts"
 import {connect} from "react-redux"
-import SnackBar from './snackbar'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +58,7 @@ function QuestionCard({ownProps,user,isLoggedIn}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [displayRead, setDispalyRead] = React.useState('block');
+  const [enableHeart, changeHeart] = React.useState(false);
   var isAnswers = true;
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -77,7 +77,7 @@ function QuestionCard({ownProps,user,isLoggedIn}) {
   async function addHeart(id,type){
     if (isLoggedIn){
        let result = await addHeartToDatabase(ownProps.title,type,id,user.token);
-       console.log('ADD HEART RESULT', result);
+       changeHeart(true);
     }
     else{
       alert('You need to be logged in to heart!')
@@ -112,7 +112,8 @@ function QuestionCard({ownProps,user,isLoggedIn}) {
               date={answer.date}
               author={answer.author} 
               hearts={answer.hearts} 
-              heartCallback={addHeart} 
+              heartCallback={addHeart}               
+              enableHeart={enableHeart}
             /> 
           )) : 'No answers yet...be the first to post' 
         }
@@ -140,7 +141,8 @@ function QuestionCard({ownProps,user,isLoggedIn}) {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
-          onClick={() => addHeart(ownProps.questionID, 'question')}
+          onClick={ function updateHeart() { addHeart(ownProps.questionID, 'question')} }
+          disabled={enableHeart}
         >
           <FavoriteIcon 
           aria-label="add to favorites"  className={classes.heart} /> <span className={classes.heartNumber}>{ownProps.hearts}</span>

@@ -20,3 +20,29 @@
 .MuiTypography-colorTextSecondary {
     color: rgb(0, 0, 0) !important;
 }
+
+.answerText{
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+@media screen and (max-width:599px){
+    .avatorAnswer{
+        display: none;
+    }
+    .answerList{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .answerText{
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+    #simple-tabpanel-0 .MuiCardContent-root{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    #simple-tabpanel-0 .MuiBox-root{
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+}
