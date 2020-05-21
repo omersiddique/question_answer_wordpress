@@ -23,7 +23,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
 
     useEffect( () => {
       // get data from Wordpress
-      fetch(`https://hikmahsessions.com/control-panelz/wp-json/iman-shield/v1/questions`)
+      fetch(`https://hikmahsessions.com/control-panelz/wp-json/iman-shield/v1/questions?page=0`)
       .then(async response => {
         let data = await response.json();
         console.log('INDEX PAGE', data);
@@ -51,7 +51,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
           (questions) ?
           Object.values(questions).map( item => ( 
               <>         
-                <QuestionCard title={item.title} question={item.question} categories={item.categories} update={item.update} key={item.id} questionID={item.id} answers={item.answers} hearts={item.hearts} /> 
+                {(item.post_count) ? questions['post_count'] : <QuestionCard title={item.title} question={item.question} categories={item.categories} update={item.update} key={item.id} questionID={item.id} answers={item.answers} hearts={item.hearts} /> }
               </>        
                 )
             ) 
