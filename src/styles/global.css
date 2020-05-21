@@ -46,3 +46,21 @@
         padding-right: 10px !important;
     }
 }
+
+
+
+.pagination{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    width: fit-content;
+}
+
+#logo{
+    width: 10rem;
+}
+
+#entry-img{
+    width: 15rem;
+}

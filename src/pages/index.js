@@ -8,6 +8,7 @@ import QuestionCard from "../components/question"
 import Backdrop from "../components/backdrop"
 import QuestionForm from "../components/question-form"
 import "../components/iman-shield.css"
+import Pagination from "../components/pagination/pagintation"
 
 
 const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
@@ -34,7 +35,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
     return (
     <Layout>
         <QuestionForm open={true} />        
-          <Typo variant="h3">Iman Shield</Typo>
+          <img src="/images/imanshield.png" id="entry-img" />
           <Grid container>
             <Grid item xs={6}>
               <Typo style={{fontStyle:'italic'}}>Have a doubt about Islam? Chances are there is a good answer out there that you just don't know yet! Post a question and have it answered by the community.</Typo>
@@ -59,6 +60,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
            : <Backdrop />
         
           }
+          <Pagination />
     </Layout>
     )
 }

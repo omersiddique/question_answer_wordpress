@@ -5,7 +5,7 @@ export default props => (
 <>
     <Helmet>
         <meta charSet="utf-8" />
-        <title>Hikmah Sessions</title>
+        <title>Iman Shield - Hikmah Sessions</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         <meta
             name="viewport"
