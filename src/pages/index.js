@@ -37,16 +37,15 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
         <QuestionForm open={true} />        
           <img src="/images/imanshield.png" id="entry-img" />
           <Grid container>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Typo style={{fontStyle:'italic'}}>Have a doubt about Islam? Chances are there is a good answer out there that you just don't know yet! Post a question and have it answered by the community.</Typo>
-            </Grid> 
-            <Grid item xs={6}>
               { isLoggedIn ? 
               (<><QuestionForm show={showQuestionForm} hide={handleCloseForm} />      
               <Button style={{float:`right`}} variant="outlined" color="primary" onClick={handleClickOpen}>
                 Post Question
-              </Button></>) : <Typo style={{textAlign:`right`}}>Login to post a question!</Typo>}
-            </Grid>
+              </Button></>) : <Typo style={{fontStyle:'italic'}}>Login to post a question!</Typo>}
+            </Grid> 
+              
           </Grid>      
         {          
           (questions) ?
