@@ -64,3 +64,11 @@
 #entry-img{
     width: 15rem;
 }
+
+.MuiCardHeader-avatar{
+    max-width: 80%;
+}
+
+.chip {
+    margin: 1px !important;
+}
