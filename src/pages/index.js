@@ -32,7 +32,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions, pagesCount}) => {
         //console.log('PAGINATION PAGE', data);
         updateQuestions(data);
       });
-      window.scrollTo({top:0,left:0,behaviour:'smooth'});
+      window.scrollTo({top:0,left:0,behavior:'smooth'});
     }
 
     useEffect( () => {
