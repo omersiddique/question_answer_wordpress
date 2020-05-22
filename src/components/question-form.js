@@ -28,7 +28,7 @@ const FormDialog = ({ isLoggedIn, user, questions, ownProps, updateQuestion }) =
     event.preventDefault();
     changeLoading(true);    
     setMessage(false);
-    const response = await getQuestions(title, content, categoryIDs, user.token, true);   
+    const response = await getQuestions({title, content, categories: categoryIDs, token: user.token, isNewQuestion: true});   
     const data = await response.json();   
     console.log('Returned frpm POST QUESTION', data); 
     changeLoading(false);

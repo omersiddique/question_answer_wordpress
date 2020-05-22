@@ -12,12 +12,15 @@ import Pagination from '@material-ui/lab/Pagination';
 //   },
 // }));
 
-export default function PaginationSize() {
+export default function PaginationSize(props) {
+  const postsPerPage = 5;
  // const classes = useStyles();
-
+ const numPages = Math.ceil(props.pages/postsPerPage);
+ //console.log('POPS', props.pages);
+ //console.log('numPages', numPages);
   return (
     <div className={`pagination`}>
-      <Pagination count={10} size="large" />
+      <Pagination count={numPages} size="large" onChange={props.changeFunction} />
     </div>
   );
 }

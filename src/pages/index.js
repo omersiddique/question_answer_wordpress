@@ -9,10 +9,12 @@ import Backdrop from "../components/backdrop"
 import QuestionForm from "../components/question-form"
 import "../components/iman-shield.css"
 import Pagination from "../components/pagination/pagintation"
+import getQuestions from "../components/functions/getQuestions"
 
 
-const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
+const IndexPage = ({isLoggedIn, questions, updateQuestions, pagesCount}) => {
     const [showQuestionForm, toggleQuestionForm] = React.useState(false);
+    //console.log('INEX PAGE COUNT', pagesCount )
 
     const handleCloseForm = () => {
       toggleQuestionForm(false);
@@ -22,18 +24,32 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
       toggleQuestionForm(true);
     }
 
-    useEffect( () => {
-      // get data from Wordpress
-      fetch(`https://hikmahsessions.com/control-panelz/wp-json/iman-shield/v1/questions?page=0`)
+    const nextPage = async (event, value) => {
+      //console.log('PAGINATION WIT', value);      
+      getQuestions( {page: value} )
       .then(async response => {
         let data = await response.json();
-        console.log('INDEX PAGE', data);
+        //console.log('PAGINATION PAGE', data);
         updateQuestions(data);
-      })
+      });
+      window.scrollTo({top:0,left:0,behaviour:'smooth'});
+    }
+
+    useEffect( () => {
+      // get data from Wordpress
+      //fetch(`https://hikmahsessions.com/control-panelz/wp-json/iman-shield/v1/questions?page=1`)
+      getQuestions({isNewQuestion : false})
+      .then(async response => {
+        let data = await response.json();
+       // console.log('INDEX PAGE', data);
+        updateQuestions(data);
+      });
     }, [])
+
 
     return (
     <Layout>
+        {(false) ? <Backdrop /> : ''}
         <QuestionForm open={true} />        
           <img src="/images/imanshield.png" id="entry-img" />
           <Grid container>
@@ -49,23 +65,24 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions}) => {
           </Grid>      
         {          
           (questions) ?
+          
           Object.values(questions).map( item => ( 
               <>         
                 {(item.post_count) ? questions['post_count'] : <QuestionCard title={item.title} question={item.question} categories={item.categories} update={item.update} key={item.id} questionID={item.id} answers={item.answers} hearts={item.hearts} /> }
               </>        
                 )
             ) 
-           
+            
            : <Backdrop />
         
           }
-          <Pagination />
+         { (pagesCount) ? <Pagination pages={pagesCount} changeFunction={nextPage} /> : '' }
     </Layout>
     )
 }
 
-const mapStateToProps = ({isLoggedIn, questions}) => {
-  return {isLoggedIn, questions};
+const mapStateToProps = ({isLoggedIn, questions, pages}) => {
+  return {isLoggedIn, questions, pagesCount: pages};
 }
 
 const mapDispatchToProps = dispatch => {

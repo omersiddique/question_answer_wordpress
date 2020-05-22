@@ -72,3 +72,8 @@
 .chip {
     margin: 1px !important;
 }
+
+#footer-text{
+    margin-left: 5.6rem;
+    margin-top: -1.4rem;
+}

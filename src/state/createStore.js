@@ -1,6 +1,7 @@
 import {createStore as reduxCreateStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import cloneDeep from 'lodash/cloneDeep'
+//import {composeWithDevTools } from 'remote-redux-devtools'
 
 /**
  * This is a reducer, a pure function with (state, action) => state signature.
@@ -28,9 +29,20 @@ const reducer = (state, action) => {
 
     if (action.type === `QUESTIONUPDATE`){
         //  console.log(state);
-        //  console.log(action.payload);
-         let newState = {...state, questions:{...action.payload}};
-         //console.log(newState);
+        // console.log('QUESTIONUPDATE', action.payload);
+         let pages = action.payload.pop();
+         pages = pages.post_count;
+        // console.log('page_count', pages)
+        // console.log('page_count', typeof pages)
+         let newState;
+         if (pages === false){
+            newState = {...state, questions:{...action.payload}};
+         }
+         else{
+            newState = {...state, questions:{...action.payload}, pages:pages };
+         }
+         
+        // console.log('QUESTION UPDAE NEW STATE', newState);
          return newState;
     }
 
@@ -64,8 +76,13 @@ const initialState = {
     user: {},
     isLoggedIn: false,
     questions: false,
+    pages: false,
 }
 
 // hooking up thunk to store
-const createStore = () => reduxCreateStore(reducer, initialState, applyMiddleware(thunk));
+const createStore = () => reduxCreateStore(reducer, initialState, applyMiddleware(thunk)); // before redux dev tools
+// redux devtools
+// const composeEnhancers = composeWithDevTools({raltime: true, port:8000});
+// const createStore = () => reduxCreateStore(reducer, initialState, composeEnhancers(applyMiddleware(thunk) ) );
+// end redux devtools
 export default createStore;

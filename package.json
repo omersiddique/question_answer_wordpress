@@ -43,7 +43,8 @@
     "typography-theme-kirkham": "^0.16.19"
   },
   "devDependencies": {
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "remote-redux-devtools": "^0.5.0"
   },
   "repository": {
     "type": "git",

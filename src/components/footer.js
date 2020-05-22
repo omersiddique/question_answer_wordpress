@@ -7,7 +7,7 @@ export default () => {
         <>
             <Box p={3}></Box>
             <div className="footer">
-            <Type align='left' className='footerText'><img alt="imanshied logo" src="/images/imanshield_white.png" style={{width: `5rem`}} /><div>...a <a href="https://hikmahsessions.com">Hikmah Sessions</a> project.</div></Type>
+            <Type align='left' className='footerText'><img alt="imanshied logo" src="/images/imanshield_white.png" style={{width: `5rem`}} /><div id="footer-text">...a <a href="https://hikmahsessions.com">Hikmah Sessions</a> project.</div></Type>
             </div>
         </>
     );   

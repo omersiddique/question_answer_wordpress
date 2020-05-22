@@ -1,5 +1,6 @@
-export default async function getQuestions(title, content, categories, token, isNewQuestion){
-    const login_url = `https://hikmahsessions.com/control-panelz/wp-json/iman-shield/v1/questions`;
+export default async function getQuestions({title, content, categories, token, isNewQuestion = false, page = `1`}){
+    //console.log('GETQUESTIONS', page);
+    const login_url = `https://hikmahsessions.com/control-panelz/wp-json/iman-shield/v1/questions?page=${page}`;
 
     if (isNewQuestion){
         const login_data = {
