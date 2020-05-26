@@ -10,10 +10,29 @@ import QuestionForm from "../components/question-form"
 import "../components/iman-shield.css"
 import Pagination from "../components/pagination/pagintation"
 import getQuestions from "../components/functions/getQuestions"
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import AccountCircle from '@material-ui/icons/Search';
+import GetSearch from '../components/functions/search'
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      width: '100%',
+      paddingTop: `2rem`
+    },
+  },
+}));
 
 const IndexPage = ({isLoggedIn, questions, updateQuestions, pagesCount}) => {
     const [showQuestionForm, toggleQuestionForm] = React.useState(false);
+    const [searchTerm, updateSearchTerm] = React.useState('');
+    //const [searchActivated, updateSearchActivated] = React.useState(false);
+    const [loading, changeLoading] = React.useState(false);
+    const classes = useStyles();
     //console.log('INEX PAGE COUNT', pagesCount )
 
     const handleCloseForm = () => {
@@ -22,6 +41,18 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions, pagesCount}) => {
     
     const handleClickOpen = () => {
       toggleQuestionForm(true);
+    }
+
+    const updateTerm = (event) => {
+      updateSearchTerm(event.target.value);
+    }
+
+    const submitSearch = async() => {
+      changeLoading(true);
+      let data = await GetSearch(searchTerm);
+      data = await data.json();
+      updateQuestions(data);
+      changeLoading(false);
     }
 
     const nextPage = async (event, value) => {
@@ -49,7 +80,7 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions, pagesCount}) => {
 
     return (
     <Layout>
-        {(false) ? <Backdrop /> : ''}
+        {loading ? <Backdrop /> : ''}
         <QuestionForm open={true} />        
           <img src="/images/imanshield.png" id="entry-img" />
           <Grid container>
@@ -60,12 +91,30 @@ const IndexPage = ({isLoggedIn, questions, updateQuestions, pagesCount}) => {
               <Button style={{float:`right`}} variant="outlined" color="primary" onClick={handleClickOpen}>
                 Post Question
               </Button></>) : <Typo style={{fontStyle:'italic'}}>Login to post a question!</Typo>}
+
+              <FormControl className={['searchBox', classes.root].join(' ')}>
+              <InputLabel htmlFor="input-with-icon-adornment">Search</InputLabel>
+              <Input
+                id="input-with-icon-adornment"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                }
+                endAdornment={
+                  <Button style={{marginTop: `-1rem`}} onClick={submitSearch} color="primary" variant="outlined">Go</Button>
+                }
+                value={searchTerm}
+                onChange={updateTerm}
+              />
+
+            </FormControl>
             </Grid> 
               
           </Grid>      
         {          
           (questions) ?
-          
+          (questions === 'empty') ? <Typo style={{color: `red`}}>No questions found! Please try again.</Typo> :
           Object.values(questions).map( item => ( 
               <>         
                 {(item.post_count) ? questions['post_count'] : <QuestionCard title={item.title} question={item.question} categories={item.categories} update={item.update} key={item.id} questionID={item.id} answers={item.answers} hearts={item.hearts} /> }

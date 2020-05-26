@@ -1,6 +1,7 @@
 import {createStore as reduxCreateStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import cloneDeep from 'lodash/cloneDeep'
+import _ from 'lodash'
 //import {composeWithDevTools } from 'remote-redux-devtools'
 
 /**
@@ -29,7 +30,7 @@ const reducer = (state, action) => {
 
     if (action.type === `QUESTIONUPDATE`){
         //  console.log(state);
-        // console.log('QUESTIONUPDATE', action.payload);
+         console.log('QUESTIONUPDATE', action.payload);
          let pages = action.payload.pop();
          pages = pages.post_count;
         // console.log('page_count', pages)
@@ -42,7 +43,12 @@ const reducer = (state, action) => {
             newState = {...state, questions:{...action.payload}, pages:pages };
          }
          
-        // console.log('QUESTION UPDAE NEW STATE', newState);
+         console.log('QUESTION UPDAE NEW STATE', newState);
+         console.log(newState.questions.length);
+         // mainly to tackle search requests
+         if (_.isEmpty(newState.questions)){
+             newState.questions = "empty";
+         }
          return newState;
     }
 
